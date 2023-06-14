@@ -56,7 +56,7 @@ public class NotificationTask {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSound(uri)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManagerCompat notificationManager
                 = NotificationManagerCompat.from(parentActivity);
