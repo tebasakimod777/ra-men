@@ -1,4 +1,4 @@
-package com.example.keyminder;
+package com.example.keyminder.network;
 
 import android.util.Log;
 
@@ -12,7 +12,7 @@ import java.net.URL;
 public class HttpPostTask {
     private HttpURLConnection httpConn = null;
 
-    protected String execute(String... strings) {
+    public String execute(String... strings) {
         String requestURL = strings[0];
         String contentType = strings[1];
         OutputStream outputStream;

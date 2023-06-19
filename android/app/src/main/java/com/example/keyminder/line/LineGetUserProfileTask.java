@@ -1,7 +1,10 @@
-package com.example.keyminder;
+package com.example.keyminder.line;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+
+import com.example.keyminder.Configuration;
+import com.example.keyminder.network.HttpGetTask;
 
 import java.util.concurrent.ExecutionException;
 

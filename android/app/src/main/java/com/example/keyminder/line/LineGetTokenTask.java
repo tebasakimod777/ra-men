@@ -1,15 +1,12 @@
-package com.example.keyminder;
+package com.example.keyminder.line;
 
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.example.keyminder.Configuration;
+import com.example.keyminder.network.HttpGetTask;
+
 import java.util.concurrent.ExecutionException;
 
 public class LineGetTokenTask extends AsyncTask<String, Void, String> {

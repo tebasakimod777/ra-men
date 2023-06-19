@@ -3,10 +3,11 @@ package com.example.keyminder;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.util.Log;
+
+import com.example.keyminder.line.LineNotificationTask;
+import com.example.keyminder.line.VerifyTokenTask;
 
 import java.util.concurrent.ExecutionException;
 
@@ -36,6 +37,7 @@ public class NotificationManager {
         }
 
         if (mode == "native") {
+            NotifyWithNativeNotification(message);
         } else {
             String access_token = pref.getString("access_token", "");
             String userId = pref.getString("userId", "");

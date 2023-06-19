@@ -1,4 +1,4 @@
-package com.example.keyminder;
+package com.example.keyminder.network;
 
 import android.util.Log;
 
@@ -12,7 +12,7 @@ import java.net.URL;
 public class HttpGetTask {
     private HttpURLConnection httpConn = null;
 
-    protected String execute(String... strings) {
+    public String execute(String... strings) {
 
         Log.d("AsyncGetTask", "AsyncGetTask Called");
 

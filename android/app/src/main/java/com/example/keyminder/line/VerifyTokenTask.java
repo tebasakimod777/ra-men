@@ -1,9 +1,11 @@
-package com.example.keyminder;
+package com.example.keyminder.line;
 
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.keyminder.Configuration;
+import com.example.keyminder.network.HttpGetTask;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

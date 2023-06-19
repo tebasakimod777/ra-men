@@ -1,10 +1,12 @@
-package com.example.keyminder;
+package com.example.keyminder.line;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.keyminder.Configuration;
 
 import java.util.UUID;
 

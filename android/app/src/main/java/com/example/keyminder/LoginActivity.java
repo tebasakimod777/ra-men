@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.concurrent.ExecutionException;
+
+import com.example.keyminder.line.LineGetTokenTask;
+import com.example.keyminder.line.LineGetUserProfileTask;
+import com.example.keyminder.line.LineLoginTask;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
