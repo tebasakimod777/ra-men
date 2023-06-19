@@ -24,11 +24,11 @@ import androidx.core.graphics.drawable.IconCompat;
 import java.io.IOException;
 import java.net.URL;
 
-public class NotificationTask {
+public class NativeNotificationTask {
 
     private Activity parentActivity;
 
-    public NotificationTask(Activity parentActivity) {
+    public NativeNotificationTask(Activity parentActivity) {
         this.parentActivity = parentActivity;
     }
 
