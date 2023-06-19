@@ -2,7 +2,7 @@
 ## 1. LINE Developers API で　自身の callback URL を追加する
 TODO (まだチャンネルに招待していない)
 
-## line-api/key.env を追加
+## 2. line-api/key.env を追加
 ```
 APP_KEY_SECRET = 'secret key'
 

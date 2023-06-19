@@ -25,7 +25,6 @@ def token():
 
 def verify():
     access_token = request.args.get('access_token')
-    payload = {'access_token': access_token}
     res = requests.get(VERIFY_URL+f'?access_token={access_token}')
     return {
         'status_code': res.status_code
