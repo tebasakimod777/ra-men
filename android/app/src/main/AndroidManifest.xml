@@ -23,9 +23,6 @@
             android:name=".LoginSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".UserSettingActivity"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>

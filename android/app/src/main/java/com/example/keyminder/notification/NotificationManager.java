@@ -1,4 +1,4 @@
-package com.example.keyminder;
+package com.example.keyminder.notification;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -8,22 +8,16 @@ import android.util.Log;
 
 import com.example.keyminder.line.LineNotificationTask;
 import com.example.keyminder.line.VerifyTokenTask;
+import com.example.keyminder.notification.NativeNotificationTask;
 
 import java.util.concurrent.ExecutionException;
 
 public class NotificationManager {
     private Activity parentActivity;
-    NativeNotificationTask nativeNotificationTask;
-    LineNotificationTask lineNotificationTask;
-
-    VerifyTokenTask verifyTokenTask;
     SharedPreferences pref;
 
     public NotificationManager(Activity parentActivity) {
         this.parentActivity = parentActivity;
-        nativeNotificationTask = new NativeNotificationTask(this.parentActivity);
-        lineNotificationTask = new LineNotificationTask(this.parentActivity);
-        verifyTokenTask = new VerifyTokenTask();
         pref = this.parentActivity.getSharedPreferences("prefs", MODE_PRIVATE);
     }
 
@@ -39,6 +33,8 @@ public class NotificationManager {
         if (mode == "native") {
             NotifyWithNativeNotification(message);
         } else {
+            VerifyTokenTask verifyTokenTask = new VerifyTokenTask();
+
             String access_token = pref.getString("access_token", "");
             String userId = pref.getString("userId", "");
 
@@ -66,10 +62,12 @@ public class NotificationManager {
     private void NotifyWithNativeNotification(String message) {
         String channelId = "12345";
         String title = "KeyMinder";
+        NativeNotificationTask nativeNotificationTask = new NativeNotificationTask(parentActivity);
         nativeNotificationTask.sendNotification(channelId, title, message);
     }
 
     private void NotifyWithLineNotification(String userId, String message) {
+        LineNotificationTask lineNotificationTask = new LineNotificationTask(this.parentActivity);
         lineNotificationTask.execute(userId, message);
     }
 

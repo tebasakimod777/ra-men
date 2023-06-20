@@ -19,7 +19,6 @@ public class LoginSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_setting);
 
-        VerifyTokenTask verifyTokenTask = new VerifyTokenTask();
         SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
         String access_token = pref.getString("access_token", "");
 
@@ -35,6 +34,7 @@ public class LoginSettingActivity extends AppCompatActivity {
 
         Button loginoutButton = findViewById(R.id.loinout_button);
 
+        VerifyTokenTask verifyTokenTask = new VerifyTokenTask();
         String token_state;
         try {
             token_state = verifyTokenTask.execute(access_token).get();

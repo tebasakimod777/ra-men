@@ -1,4 +1,4 @@
-package com.example.keyminder;
+package com.example.keyminder.notification;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -20,6 +20,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
+
+import com.example.keyminder.R;
 
 import java.io.IOException;
 import java.net.URL;

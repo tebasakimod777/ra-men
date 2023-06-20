@@ -28,9 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        LineLoginTask loginTask = new LineLoginTask(this);
-        LineGetTokenTask getTokenTask = new LineGetTokenTask(this);
-        LineGetUserProfileTask getUserProfileTask = new LineGetUserProfileTask(this);
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> json;
         SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -38,8 +35,12 @@ public class LoginActivity extends AppCompatActivity {
 
         String code = parseIntent(getIntent());
         if (code == null) {
+            LineLoginTask loginTask = new LineLoginTask(this);
             loginTask.execute();
         } else {
+            LineGetTokenTask getTokenTask = new LineGetTokenTask(this);
+            LineGetUserProfileTask getUserProfileTask = new LineGetUserProfileTask(this);
+
             try {
                 String response = getTokenTask.execute(code).get();
                 json = objectMapper.readValue(response, new TypeReference<Map<String,Object>>(){});

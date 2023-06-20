@@ -1,21 +1,13 @@
 package com.example.keyminder;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import com.example.keyminder.notification.NotificationManager;
 
 public class MainActivity extends AppCompatActivity {
     @Override
