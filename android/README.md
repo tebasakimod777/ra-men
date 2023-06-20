@@ -22,7 +22,6 @@ notificationManager.Notify("メッセージ");
 とするとActivity上に通知を送れる。
 
 LINEアカウントにログインした状態だと LINE に通知が送信される。
-
 また
 ```
 NotificationManager notificationManager = new NotificationManager(this);
@@ -55,6 +54,7 @@ LineLoginTask と違ってログアウト後に別の Activity に遷移しな�
 
 ### LineNotification Task
 ログインしている LINE アカウントに通知をする AsyncTask。
+
 通知を行う前に 取得している `access_token` が有効であることを検証する必要がある。
 Activity 内で以下のように実行する。
 ```
@@ -74,5 +74,7 @@ try {
 if (token_state == "valid") {
     LineNotificationTask lineNotificationTask = new LineNotificationTask(this);
     lineNotificationTask.execute(userId, message);
+} else {
+    // invalid
 }
 ```
