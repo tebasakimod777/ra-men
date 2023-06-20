@@ -1,5 +1,8 @@
 package com.example.keyminder.line;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,6 +16,14 @@ public class LineGetTokenTask extends AsyncTask<String, Void, String> {
 
     private HttpGetTask getTask = new HttpGetTask();
 
+    private Activity parentActivity;
+
+    private ProgressDialog dialog;
+
+    public LineGetTokenTask(Activity parentActivity) {
+        this.parentActivity = parentActivity;
+    }
+
     @Override
     protected String doInBackground(String... strings) {
 
@@ -25,6 +36,14 @@ public class LineGetTokenTask extends AsyncTask<String, Void, String> {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected void onPreExecute() {
+    }
+
+    @Override
+    protected void onPostExecute(String string) {
     }
 
     private String getToken(String code) throws ExecutionException, InterruptedException {

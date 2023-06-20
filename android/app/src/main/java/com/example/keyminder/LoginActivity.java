@@ -29,8 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         LineLoginTask loginTask = new LineLoginTask(this);
-        LineGetTokenTask getTokenTask = new LineGetTokenTask();
-        LineGetUserProfileTask getUserProfileTask = new LineGetUserProfileTask();
+        LineGetTokenTask getTokenTask = new LineGetTokenTask(this);
+        LineGetUserProfileTask getUserProfileTask = new LineGetUserProfileTask(this);
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> json;
         SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -52,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("access_token", access_token);
                 editor.putString("userId", userId);
                 editor.apply();
+
+                Intent intent = new Intent(getApplication(), LoginSettingActivity.class);
+                startActivity(intent);
+
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {
@@ -62,15 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         }
-
-        Button finishButton = findViewById(R.id.finish_user_setting_button);
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplication(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 

@@ -22,7 +22,7 @@ public class NotificationManager {
     public NotificationManager(Activity parentActivity) {
         this.parentActivity = parentActivity;
         nativeNotificationTask = new NativeNotificationTask(this.parentActivity);
-        lineNotificationTask = new LineNotificationTask();
+        lineNotificationTask = new LineNotificationTask(this.parentActivity);
         verifyTokenTask = new VerifyTokenTask();
         pref = this.parentActivity.getSharedPreferences("prefs", MODE_PRIVATE);
     }

@@ -1,5 +1,7 @@
 package com.example.keyminder.line;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -12,6 +14,14 @@ public class LineGetUserProfileTask extends AsyncTask<String, Void, String> {
 
     private HttpGetTask getTask = new HttpGetTask();
 
+    private Activity parentActivity;
+
+    private ProgressDialog dialog;
+
+    public LineGetUserProfileTask(Activity parentActivity) {
+        this.parentActivity = parentActivity;
+    }
+
     protected String doInBackground(String... strings) {
         try {
             return getUserProfile(strings[0]);
@@ -20,6 +30,14 @@ public class LineGetUserProfileTask extends AsyncTask<String, Void, String> {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected void onPreExecute() {
+    }
+
+    @Override
+    protected void onPostExecute(String string) {
     }
 
     private String getUserProfile(String access_token) throws ExecutionException, InterruptedException {

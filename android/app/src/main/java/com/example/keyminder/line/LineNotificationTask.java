@@ -1,5 +1,7 @@
 package com.example.keyminder.line;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -12,6 +14,14 @@ public class LineNotificationTask extends AsyncTask<String, Void, String> {
 
     private HttpPostTask postTask = new HttpPostTask();
 
+    private Activity parentActivity;
+
+    private ProgressDialog dialog;
+
+    public LineNotificationTask(Activity parentActivity) {
+        this.parentActivity = parentActivity;
+    }
+
     @Override
     protected String doInBackground(String... strings) {
         try {
@@ -23,6 +33,14 @@ public class LineNotificationTask extends AsyncTask<String, Void, String> {
         }
     }
 
+    @Override
+    protected void onPreExecute() {
+    }
+
+    @Override
+    protected void onPostExecute(String strings) {
+    }
+
     String sendNotification(String userId, String messages) throws ExecutionException, InterruptedException {
         Uri uri = Uri.parse(Configuration.HOST_URL + "/sendMessage").buildUpon()
                 .appendQueryParameter("userId", userId)
@@ -30,4 +48,6 @@ public class LineNotificationTask extends AsyncTask<String, Void, String> {
                 .build();
         return postTask.execute(uri.toString(), "application/x-www-form-urlencoded; charset=UTF-8");
     }
+
+
 }

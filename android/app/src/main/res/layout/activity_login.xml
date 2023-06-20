@@ -12,14 +12,6 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/finish_user_setting_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="完了"></Button>
-
-
     </LinearLayout>
 
 

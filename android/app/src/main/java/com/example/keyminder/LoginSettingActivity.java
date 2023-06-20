@@ -52,7 +52,7 @@ public class LoginSettingActivity extends AppCompatActivity {
                 loginoutButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        LineLogoutTask logoutTask = new LineLogoutTask();
+                        LineLogoutTask logoutTask = new LineLogoutTask(LoginSettingActivity.this);
                         logoutTask.execute(access_token);
                         Intent intent = new Intent(getApplication(), LoginSettingActivity.class);
                         startActivity(intent);
