@@ -2,6 +2,9 @@ package com.example.keyminder;
 
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +23,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.example.keyminder.notification.NotificationManager;
+
 public class MainActivity extends AppCompatActivity {
 
     private RadioGroup radioGroup;
@@ -30,6 +35,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // NotificationTask task = new NotificationTask(this);
+
+        // LineNotificationTask notificationTask = new LineNotificationTask();
+
+        NotificationManager notificationManager = new NotificationManager(this);
+
+        Button notificationButton = findViewById(R.id.notification_button);
+
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                String channelId = "channel_id";
+//                String title = "通知";
+//                String message = "通知をお知らせします";
+//                task.sendNotification(channelId, title, message);
+                notificationManager.Notify("メッセージ");
+            }
+        });
+
+        Button loginSettingButton = findViewById(R.id.login_setting_button);
+        loginSettingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(), LoginSettingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         radioGroup = findViewById(R.id.radioGroup);
         fileContentTextView = findViewById(R.id.fileContentTextView);
