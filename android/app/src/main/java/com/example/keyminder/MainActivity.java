@@ -1,7 +1,10 @@
 package com.example.keyminder;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +23,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.example.keyminder.notification.NotificationManager;
 
@@ -30,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private TextView fileContentTextView;
     private SharedPreferences preferences;
+    private boolean isWifiConnected = false;
+    private String savedIPAddress = "";
+
+    private TextView txtMatchStatus;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
             }
         });
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (!savedIPAddress.isEmpty()) {
+                    checkIPAddressMatch();
+                }
+            }
+        }, 0, 5000); // 5秒ごとに実行
     }
 
     private void populateRadioGroup() {
@@ -151,4 +176,79 @@ public class MainActivity extends AppCompatActivity {
         }
         return content.toString();
     }
+
+    private String readTextFromFile() {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            FileInputStream fileInputStream = openFileInput("saved_text.txt");
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
+    }
+
+    private String getIPAddress() {
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = interfaces.nextElement();
+                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress address = addresses.nextElement();
+                    if (!address.isLoopbackAddress() && address.getAddress().length == 4) {
+                        return address.getHostAddress();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private void checkIPAddressMatch() {
+        String ipAddress = getIPAddress();
+        String savedIPAddress = readTextFromFile();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (isWifiConnected && ipAddress.equals(savedIPAddress)) {
+                    txtMatchStatus.setText("一致");
+                } else {
+                    txtMatchStatus.setText("不一致");
+                }
+            }
+        });
+    }
+
+    private boolean isWifiConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return wifiNetworkInfo != null && wifiNetworkInfo.isConnected();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isWifiConnected = isWifiConnected();
+        savedIPAddress = readTextFromFile();
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+    }
 }
+
+
