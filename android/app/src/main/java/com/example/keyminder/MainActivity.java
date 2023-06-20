@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         fileContentTextView = findViewById(R.id.fileContentTextView);
         preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        txtMatchStatus = findViewById(R.id.txtMatchStatus);
 
         populateRadioGroup();
         restoreSelectedRadioButton();
