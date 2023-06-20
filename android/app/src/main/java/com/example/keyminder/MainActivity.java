@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 //                String title = "通知";
 //                String message = "通知をお知らせします";
 //                task.sendNotification(channelId, title, message);
-                notificationManager.Notify("メッセージ");
+                notificationManager.Notify("メッセージ", "native");
             }
         });
 
