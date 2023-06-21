@@ -21,6 +21,7 @@ public class HttpPostTask {
         StringBuffer result = new StringBuffer();
 
         try {
+
             URL url = new URL(requestURL);
 
             httpConn = (HttpURLConnection) url.openConnection();

@@ -154,17 +154,13 @@ public class MainActivity extends AppCompatActivity {
         RadioButton radioButton = new RadioButton(this);
         radioButton.setText(fileName);
         radioGroup.addView(radioButton);
-        radioButton.setText(fileName + " Id: " +String.valueOf(radioButton.getId()));
     }
 
     private void restoreSelectedRadioButton() {
         int selectedButtonId = preferences.getInt("selectedButtonId", -1);
-        Log.d("saved selectedButtonId", String.valueOf(selectedButtonId));
-        Log.d("actual selectedButtonId", String.valueOf(radioGroup.getCheckedRadioButtonId()));
         if (selectedButtonId != -1) {
             RadioButton selectedButton = findViewById(selectedButtonId);
             selectedButton.setChecked(true);
-            Log.d("actual selectedButtonId", String.valueOf(radioGroup.getCheckedRadioButtonId()));
         }
     }
 
