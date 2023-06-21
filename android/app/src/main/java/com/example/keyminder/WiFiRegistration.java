@@ -38,6 +38,7 @@ public class WiFiRegistration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wifiregist);
 
+
         btnGetIPAddress = findViewById(R.id.btnGetIPAddress);
         btnback = findViewById(R.id.back_btn);
 //        btnShowSavedText = findViewById(R.id.btnShowSavedText);

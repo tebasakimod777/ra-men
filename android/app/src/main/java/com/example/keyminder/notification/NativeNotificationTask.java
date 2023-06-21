@@ -21,6 +21,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
 
+import com.example.keyminder.Configuration;
 import com.example.keyminder.R;
 
 import java.io.IOException;
@@ -37,23 +38,26 @@ public class NativeNotificationTask {
     private void createNotificationChannel(String channelId) {
         // APIレベルが26以上だと必要らしい
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel(channelId, "チャンネル名", importance);
+
+            Log.d("API 26", "channel created");
+
+            int importance = NotificationManager.IMPORTANCE_MAX;
+            NotificationChannel channel = new NotificationChannel(parentActivity.getString(R.string.app_name), "チャンネル名", importance);
 
             channel.setDescription("チャンネルの説明");
 
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            // channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             channel.setImportance(NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationManager notificationManager = (NotificationManager) parentActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager) parentActivity.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
 
     public void sendNotification(String channelId, String title, String message) {
         createNotificationChannel(channelId);
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION); // initialize Uri here
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(parentActivity, "CHANNEL_ID")
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(parentActivity, parentActivity.getString(R.string.app_name))
                 .setSmallIcon(com.google.android.material.R.drawable.notification_icon_background)
                 .setContentTitle(title)
                 .setContentText(message)

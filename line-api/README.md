@@ -20,7 +20,7 @@ Forwarding                    https://xxxxxxxxx -> http://localhost:8080
 というのが表示されるので `https://xxxxxxxxx` の部分をメモしとく。
 
 
-### 1. LINE Developers API で　自身の callback URL を追加する
+### 1. LINE Developers API で自身の callback URL を追加する
 callback URL に `https://xxxxxxxxx/callback` を追加。
 TODO (まだチャンネルに招待していない)
 

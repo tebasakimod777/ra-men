@@ -14,16 +14,19 @@
 
         <Button
             android:id="@+id/loinout_button"
-            android:layout_width="wrap_content"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="ログイン"></Button>
+            android:backgroundTint="@color/cardview_dark_background"
+            android:text="ログイン"
+            app:icon="@drawable/icon_login"></Button>
 
         <Button
             android:id="@+id/finish_login_setting_button"
-            android:layout_width="wrap_content"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/cardview_dark_background"
             android:text="完了"></Button>
 
 

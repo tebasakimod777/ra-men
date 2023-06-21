@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.SharedPreferences;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        txtMatchStatus = findViewById(R.id.txtMatchStatus);
+
         // NotificationTask task = new NotificationTask(this);
 
         // LineNotificationTask notificationTask = new LineNotificationTask();
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 //                String title = "通知";
 //                String message = "通知をお知らせします";
 //                task.sendNotification(channelId, title, message);
-                notificationManager.Notify("メッセージ");
+                notificationManager.Notify("メッセージ", "native");
             }
         });
 
@@ -85,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         populateRadioGroup();
         restoreSelectedRadioButton();
-
 
         Button wifiActivitySwitchButton = (Button) findViewById(R.id.wifi_button);
         wifiActivitySwitchButton.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 for (File file : files) {
                     if (file.isFile()) {
                         String fileName = file.getName();
+                        // addRadioButton(fileName);
                         addRadioButton(fileName);
                     }
                 }
@@ -149,15 +153,18 @@ public class MainActivity extends AppCompatActivity {
     private void addRadioButton(String fileName) {
         RadioButton radioButton = new RadioButton(this);
         radioButton.setText(fileName);
-
         radioGroup.addView(radioButton);
+        radioButton.setText(fileName + " Id: " +String.valueOf(radioButton.getId()));
     }
 
     private void restoreSelectedRadioButton() {
         int selectedButtonId = preferences.getInt("selectedButtonId", -1);
+        Log.d("saved selectedButtonId", String.valueOf(selectedButtonId));
+        Log.d("actual selectedButtonId", String.valueOf(radioGroup.getCheckedRadioButtonId()));
         if (selectedButtonId != -1) {
             RadioButton selectedButton = findViewById(selectedButtonId);
             selectedButton.setChecked(true);
+            Log.d("actual selectedButtonId", String.valueOf(radioGroup.getCheckedRadioButtonId()));
         }
     }
 
@@ -222,8 +229,14 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if (isWifiConnected && ipAddress.equals(savedIPAddress)) {
                     txtMatchStatus.setText("一致");
+                    // isWifiConnected && ipAddress.equals(savedIPAddress) ... 帰宅状態
+                    // 重量の判定を組み合わせるといい
+                    NotificationManager notificationManager = new NotificationManager(MainActivity.this);
+                    notificationManager.Notify("一致", "native");
                 } else {
                     txtMatchStatus.setText("不一致");
+                    NotificationManager notificationManager = new NotificationManager(MainActivity.this);
+                    notificationManager.Notify("不一致", "native");
                 }
             }
         });
