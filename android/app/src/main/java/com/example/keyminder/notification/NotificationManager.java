@@ -10,6 +10,7 @@ import com.example.keyminder.line.LineNotificationTask;
 import com.example.keyminder.line.VerifyTokenTask;
 import com.example.keyminder.notification.NativeNotificationTask;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 public class NotificationManager {
@@ -60,14 +61,14 @@ public class NotificationManager {
     }
 
     private void NotifyWithNativeNotification(String message) {
-        String channelId = "12345";
+        String channelId = "123456789";
         String title = "KeyMinder";
         NativeNotificationTask nativeNotificationTask = new NativeNotificationTask(parentActivity);
         nativeNotificationTask.sendNotification(channelId, title, message);
     }
 
     private void NotifyWithLineNotification(String userId, String message) {
-        LineNotificationTask lineNotificationTask = new LineNotificationTask(this.parentActivity);
+        LineNotificationTask lineNotificationTask = new LineNotificationTask(parentActivity);
         lineNotificationTask.execute(userId, message);
     }
 

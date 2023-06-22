@@ -36,6 +36,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.example.keyminder.notification.NotificationManager;
+import com.example.keyminder.raspi.GetWeightTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,21 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
         txtMatchStatus = findViewById(R.id.txtMatchStatus);
 
-        // NotificationTask task = new NotificationTask(this);
-
-        // LineNotificationTask notificationTask = new LineNotificationTask();
-
-        NotificationManager notificationManager = new NotificationManager(this);
-
         Button notificationButton = findViewById(R.id.notification_button);
 
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String channelId = "channel_id";
-//                String title = "通知";
-//                String message = "通知をお知らせします";
-//                task.sendNotification(channelId, title, message);
+                NotificationManager notificationManager = new NotificationManager(MainActivity.this);
                 notificationManager.Notify("メッセージ", "native");
             }
         });
@@ -130,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     checkIPAddressMatch();
                 }
             }
-        }, 0, 5000); // 5秒ごとに実行
+        }, 0, 10000); // 5秒ごとに実行
     }
 
     private void populateRadioGroup() {

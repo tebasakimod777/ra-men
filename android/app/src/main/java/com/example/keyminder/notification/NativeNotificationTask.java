@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -26,6 +27,7 @@ import com.example.keyminder.R;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Deque;
 
 public class NativeNotificationTask {
 
@@ -41,12 +43,10 @@ public class NativeNotificationTask {
 
             Log.d("API 26", "channel created");
 
-            int importance = NotificationManager.IMPORTANCE_MAX;
-            NotificationChannel channel = new NotificationChannel(parentActivity.getString(R.string.app_name), "チャンネル名", importance);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(channelId, "チャンネル名", importance);
 
             channel.setDescription("チャンネルの説明");
-
-            // channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             channel.setImportance(NotificationManager.IMPORTANCE_HIGH);
 
             NotificationManager notificationManager = (NotificationManager) parentActivity.getSystemService(NotificationManager.class);
@@ -57,15 +57,23 @@ public class NativeNotificationTask {
     public void sendNotification(String channelId, String title, String message) {
         createNotificationChannel(channelId);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(parentActivity, parentActivity.getString(R.string.app_name))
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(parentActivity, channelId)
                 .setSmallIcon(com.google.android.material.R.drawable.notification_icon_background)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSound(uri)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                .setPriority(NotificationCompat.PRIORITY_MAX);
 
         NotificationManagerCompat notificationManager
                 = NotificationManagerCompat.from(parentActivity);
+
+        Log.d("areNotificationEnabled", String.valueOf(notificationManager.areNotificationsEnabled()));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = notificationManager.getNotificationChannel(channelId);
+            Log.d("channel importance", String.valueOf(channel.getImportance()));
+        }
 
         if (ActivityCompat.checkSelfPermission(parentActivity, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

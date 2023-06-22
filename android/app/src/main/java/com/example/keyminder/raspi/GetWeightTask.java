@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import com.example.keyminder.Configuration;
 import com.example.keyminder.network.HttpGetTask;
 
+import java.util.concurrent.ExecutionException;
+
 public class GetWeightTask extends AsyncTask<String, Void, String> {
 
 

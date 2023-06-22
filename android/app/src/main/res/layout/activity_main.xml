@@ -68,7 +68,7 @@
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/cardview_dark_background"
             android:text="通知"
-            app:icon="@drawable/ic_launcher_foreground" />
+            />
 
         <Button
             android:id="@+id/login_setting_button"
