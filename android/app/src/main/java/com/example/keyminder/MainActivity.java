@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 NotificationManager notificationManager = new NotificationManager(MainActivity.this);
-                notificationManager.Notify("メッセージ", "native");
+                notificationManager.notify("メッセージ", "native");
             }
         });
 
@@ -220,11 +220,11 @@ public class MainActivity extends AppCompatActivity {
                     // isWifiConnected && ipAddress.equals(savedIPAddress) ... 帰宅状態
                     // 重量の判定を組み合わせるといい
                     NotificationManager notificationManager = new NotificationManager(MainActivity.this);
-                    notificationManager.Notify("一致", "native");
+                    notificationManager.notify("一致", "native");
                 } else {
                     txtMatchStatus.setText("不一致");
                     NotificationManager notificationManager = new NotificationManager(MainActivity.this);
-                    notificationManager.Notify("不一致", "native");
+                    notificationManager.notify("不一致", "native");
                 }
             }
         });

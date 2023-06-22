@@ -22,7 +22,7 @@ public class NotificationManager {
         pref = this.parentActivity.getSharedPreferences("prefs", MODE_PRIVATE);
     }
 
-    public void Notify(String... params) {
+    public void notify(String... params) {
 
         String mode = null;
         String message = params[0];
@@ -32,7 +32,7 @@ public class NotificationManager {
         }
 
         if (mode == "native") {
-            NotifyWithNativeNotification(message);
+            notifyWithNativeNotification(message);
         } else {
             VerifyTokenTask verifyTokenTask = new VerifyTokenTask();
 
@@ -52,22 +52,22 @@ public class NotificationManager {
             }
 
             if (token_state == "valid") {
-                NotifyWithLineNotification(userId, message);
+                notifyWithLineNotification(userId, message);
             } else  {
-                NotifyWithNativeNotification(message);
+                notifyWithNativeNotification(message);
             }
 
         }
     }
 
-    private void NotifyWithNativeNotification(String message) {
+    private void notifyWithNativeNotification(String message) {
         String channelId = "123456789";
         String title = "KeyMinder";
         NativeNotificationTask nativeNotificationTask = new NativeNotificationTask(parentActivity);
         nativeNotificationTask.sendNotification(channelId, title, message);
     }
 
-    private void NotifyWithLineNotification(String userId, String message) {
+    private void notifyWithLineNotification(String userId, String message) {
         LineNotificationTask lineNotificationTask = new LineNotificationTask(parentActivity);
         lineNotificationTask.execute(userId, message);
     }
