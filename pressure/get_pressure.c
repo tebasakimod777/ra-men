@@ -20,7 +20,7 @@ int main() {
 
     data = wiringPiI2CReadReg16(dev_fd, 0x0);
 
-    printf("pressure = %d\n", data);
+    printf("%d", data);
 
-    return 0;
+    return data;
 }
