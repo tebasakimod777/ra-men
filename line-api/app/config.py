@@ -29,5 +29,6 @@ BOT_URL = "https://api.line.me/v2/bot/message/push"
 
 REDIRECT_URL = HOST_URL + '/callback'
 
+RASPI_URL = "http://192.168.11.30/~pi/getpress.php"
 
 

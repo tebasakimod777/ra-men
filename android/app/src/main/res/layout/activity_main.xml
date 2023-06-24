@@ -15,8 +15,10 @@
         android:orientation="vertical">
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="442dp">
+            android:layout_width="337dp"
+            android:layout_height="442dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,24 +53,19 @@
 
         <Button
             android:id="@+id/wifi_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="WIFIを登録" />
-
-        <Button
-            android:id="@+id/item_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="アイテムを登録" />
-
-        <Button
-            android:id="@+id/notification_button"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/cardview_dark_background"
-            android:text="通知"
-            />
+            android:text="WIFIを登録" />
+
+        <Button
+            android:id="@+id/item_button"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:text="アイテムを登録" />
 
         <Button
             android:id="@+id/login_setting_button"

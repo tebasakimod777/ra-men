@@ -143,9 +143,9 @@ public class WiFiRegistration extends AppCompatActivity {
             @Override
             public void run() {
                 if (isWifiConnected && ipAddress.equals(savedIPAddress)) {
-                    txtMatchStatus.setText("一致");
+                    // txtMatchStatus.setText("一致");
                 } else {
-                    txtMatchStatus.setText("不一致");
+                    // txtMatchStatus.setText("不一致");
                 }
             }
         });

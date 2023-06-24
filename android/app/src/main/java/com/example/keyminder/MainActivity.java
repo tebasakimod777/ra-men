@@ -57,19 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
         txtMatchStatus = findViewById(R.id.txtMatchStatus);
 
-        Button notificationButton = findViewById(R.id.notification_button);
-
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NotificationManager notificationManager = new NotificationManager(MainActivity.this);
-                notificationManager.notify("メッセージ");
-//                WeightChecker weightChecker = new WeightChecker(10.0);
-//                Boolean isClose = weightChecker.isCloseToDetectedWeight(200);
-//                Log.d("isClose", String.valueOf(isClose));
-            }
-        });
-
         Button loginSettingButton = findViewById(R.id.login_setting_button);
         loginSettingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton radioButton = findViewById(checkedId);
                 String selectedFileName = radioButton.getText().toString();
-                String fileContent = readFileContent(selectedFileName);
-                fileContentTextView.setText(fileContent);
+                String fileContent = readFileContent(selectedFileName + ".txt");
+                // fileContentTextView.setText(fileContent);
 
                 // 選択された項目をSharedPreferencesに保存
                 SharedPreferences.Editor editor = preferences.edit();
@@ -134,31 +121,56 @@ public class MainActivity extends AppCompatActivity {
         if (folder.exists() && folder.isDirectory()) {
             File[] files = folder.listFiles();
             if (files != null) {
-                for (File file : files) {
+                for (int i = 0; i < files.length; i++) {
+                    File file = files[i];
                     if (file.isFile()) {
                         String fileName = file.getName();
-                        // addRadioButton(fileName);
-                        addRadioButton(fileName);
+                        addRadioButton(fileName, i);
                     }
                 }
             }
         }
     }
 
-
-    private void addRadioButton(String fileName) {
+    private void addRadioButton(String fileName, final int radioButtonIndex) {
         RadioButton radioButton = new RadioButton(this);
-        radioButton.setText(fileName);
+        radioButton.setText(fileName.substring(0,fileName.length()-4));
+        radioButton.setTextSize(20);
+
+        // ラジオボタンの位置（インデックス）をタグとして設定
+        radioButton.setTag(radioButtonIndex);
+
         radioGroup.addView(radioButton);
+
+        radioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RadioButton selectedButton = (RadioButton) view;
+                int selectedButtonIndex = (int) selectedButton.getTag();
+                String selectedFileName = selectedButton.getText().toString() + ".txt";
+                String fileContent = readFileContent(selectedFileName);
+                // fileContentTextView.setText(fileContent);
+
+                // 選択された項目の位置（インデックス）をSharedPreferencesに保存
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("selectedButtonIndex", selectedButtonIndex);
+                editor.apply();
+            }
+        });
     }
 
     private void restoreSelectedRadioButton() {
-        int selectedButtonId = preferences.getInt("selectedButtonId", -1);
-        if (selectedButtonId != -1) {
-            RadioButton selectedButton = findViewById(selectedButtonId);
+        int selectedButtonIndex = preferences.getInt("selectedButtonIndex", -1);
+        if (selectedButtonIndex != -1 && selectedButtonIndex < radioGroup.getChildCount()) {
+            RadioButton selectedButton = (RadioButton) radioGroup.getChildAt(selectedButtonIndex);
             selectedButton.setChecked(true);
+            // 選択された項目の内容を表示
+            String selectedFileName = selectedButton.getText().toString();
+            String fileContent = readFileContent(selectedFileName);
+            // fileContentTextView.setText(fileContent);
         }
     }
+
 
     private String readFileContent(String fileName) {
         StringBuilder content = new StringBuilder();
@@ -219,16 +231,55 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+//                int checkedId = preferences.getInt("selectedButtonIndex", -1);
+//                double savedWeight = 0.0;
+//                if (checkedId != -1) {
+//                    RadioButton radioButton = findViewById(checkedId);
+//                    String selectedFileName = radioButton.getText().toString();
+//                    String fileContent = readFileContent(selectedFileName);
+//                    savedWeight = Double.parseDouble(fileContent);
+//                }
+
+                double savedWeight = 0.0;
+                int selectedButtonIndex = preferences.getInt("selectedButtonIndex", -1);
+                if (selectedButtonIndex != -1 && selectedButtonIndex < radioGroup.getChildCount()) {
+                    RadioButton selectedButton = (RadioButton) radioGroup.getChildAt(selectedButtonIndex);
+                    selectedButton.setChecked(true);
+                    // 選択された項目の内容を表示
+                    String selectedFileName = selectedButton.getText().toString() + ".txt";;
+                    String fileContent = readFileContent(selectedFileName);
+                    savedWeight = Double.parseDouble(fileContent);
+                }
+
                 if (isWifiConnected && ipAddress.equals(savedIPAddress)) {
-                    txtMatchStatus.setText("一致");
+
+                    WeightChecker weightChecker = new WeightChecker();
+
+                    if  (weightChecker.isCloseToDetectedWeight(savedWeight)) {
+                        // txtMatchStatus.setText("帰宅時かつitemがある");
+                        // 通知しない
+
+                    } else {
+                        // txtMatchStatus.setText("帰宅時かつitemがない");
+                        // 通知する
+                        NotificationManager notificationManager = new NotificationManager(MainActivity.this);
+                        notificationManager.notify("アイテムをKeyMinderの上においてください", "native");
+                    }
                     // isWifiConnected && ipAddress.equals(savedIPAddress) ... 帰宅状態
                     // 重量の判定を組み合わせるといい
-                    NotificationManager notificationManager = new NotificationManager(MainActivity.this);
-                    notificationManager.notify("一致", "native");
                 } else {
-                    txtMatchStatus.setText("不一致");
-                    NotificationManager notificationManager = new NotificationManager(MainActivity.this);
-                    notificationManager.notify("不一致", "native");
+                    WeightChecker weightChecker = new WeightChecker();
+                    // if  (not item on keyminder) ...
+                    if  (weightChecker.isCloseToDetectedWeight(savedWeight)) {
+                        // txtMatchStatus.setText("外出時かつitemがある");
+                        // 通知する
+                        NotificationManager notificationManager = new NotificationManager(MainActivity.this);
+                        notificationManager.notify("アイテムをKeyMinderの上に忘れています", "native");
+                    } else {
+                        // txtMatchStatus.setText("外出かつitemがない");
+                        // 通知しない
+                    }
                 }
             }
         });

@@ -27,8 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="現在接続しているWIFIを自宅のWIFIとして登録します。
-            よろしいですか？" />
+            android:text="現在接続しているWIFIを自宅のWIFIとして登録します。よろしいですか？" />
 
         <TextView
             android:id="@+id/txtMatchStatus"
@@ -46,14 +45,18 @@
 
         <Button
             android:id="@+id/btnGetIPAddress"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/cardview_dark_background"
             android:text="はい" />
 
         <Button
             android:id="@+id/back_btn"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/cardview_dark_background"
             android:text="いいえ" />
 
 
