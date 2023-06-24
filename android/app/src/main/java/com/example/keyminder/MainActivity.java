@@ -37,6 +37,7 @@ import java.util.TimerTask;
 
 import com.example.keyminder.notification.NotificationManager;
 import com.example.keyminder.raspi.GetWeightTask;
+import com.example.keyminder.raspi.WeightChecker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 NotificationManager notificationManager = new NotificationManager(MainActivity.this);
-                notificationManager.notify("メッセージ", "native");
+                notificationManager.notify("メッセージ");
+//                WeightChecker weightChecker = new WeightChecker(10.0);
+//                Boolean isClose = weightChecker.isCloseToDetectedWeight(200);
+//                Log.d("isClose", String.valueOf(isClose));
             }
         });
 

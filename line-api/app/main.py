@@ -33,5 +33,11 @@ def logout():
 def send_message():
     return bot_router.send_message()
 
+@app.route("/weight", methods=["GET"])
+def weight():
+    return {
+        'weight': "100"
+    }
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
